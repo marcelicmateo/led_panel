@@ -9,7 +9,7 @@
 
 #define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
-void HSVtoRGB(short int *H, short int *S, short int *V, char *R, char *G, char *B)
+void HSVtoRGB(short int *H, short int *S, short int *V, short unsigned int *R, short unsigned int *G, short unsigned int *B)
 {
 
   double s = double(*S) / 100;
@@ -43,9 +43,10 @@ void HSVtoRGB(short int *H, short int *S, short int *V, char *R, char *G, char *
     r = C, g = 0, b = X;
   }
 
-  *R = (r + m) * 255;
-  *G = (g + m) * 255;
-  *B = (b + m) * 255;
+  // multiply by for for 0 - 1024 range of pwm
+  *R = (r + m) * 255 * 4;
+  *G = (g + m) * 255 * 4;
+  *B = (b + m) * 255 * 4;
 }
 
 // Initialize the OLED display using brzo_i2c
@@ -57,6 +58,7 @@ SSD1306Brzo display(0x3C, D2, D1);
 Rotary r = Rotary(D3, D4);
 
 //init button on pin D8
+#define BUTTON_PIN 3
 Button b = Button();
 
 //pwm pins for driving leds
@@ -84,7 +86,7 @@ void setup()
   display.display();
 
   // buton setup
-  b.attach(D8, INPUT);
+  b.attach(BUTTON_PIN, INPUT);
   b.interval(25);
   b.setPressedState(HIGH);
   display.clear();
@@ -132,7 +134,7 @@ void loop()
   static short int H = 0;
   static short int S = 100;
   static short int V = 100;
-  static char R, G, B;
+  static unsigned short int R, G, B;
   static unsigned short int state = Hue;
 
   static String h_prefix = "H: ";
