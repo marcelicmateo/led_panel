@@ -43,7 +43,7 @@ void HSVtoRGB(short int *H, short int *S, short int *V, short unsigned int *R, s
     r = C, g = 0, b = X;
   }
 
-  // multiply by for for 0 - 1024 range of pwm
+  // multiply by 4for for 0 - 1024 range of pwm
   *R = (r + m) * 255 * 4;
   *G = (g + m) * 255 * 4;
   *B = (b + m) * 255 * 4;
@@ -57,7 +57,7 @@ SSD1306Brzo display(0x3C, D2, D1);
 //init rotary on PINS D4, D3
 Rotary r = Rotary(D3, D4);
 
-//init button on pin D8
+//init button on pin GPIO3
 #define BUTTON_PIN 3
 Button b = Button();
 
