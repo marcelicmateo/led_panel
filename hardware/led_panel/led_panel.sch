@@ -84,8 +84,6 @@ Text Label 2300 7450 0    50   ~ 10
 GND
 Text Label 2300 6750 0    50   ~ 10
 GND
-Text Label 2300 6650 0    50   ~ 10
-3V3
 Text Label 2300 7550 0    50   ~ 10
 3V3
 Text Label 700  7550 2    50   ~ 10
@@ -553,4 +551,5 @@ Wire Wire Line
 	5600 2600 5600 2700
 Wire Wire Line
 	5600 2700 5850 2700
+NoConn ~ 2300 6650
 $EndSCHEMATC

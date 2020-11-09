@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 45)
+    (drawings 47)
     (tracks 98)
     (zones 0)
     (modules 21)
@@ -11,7 +11,7 @@
 
   (page A4)
   (layers
-    (0 F.Cu mixed)
+    (0 F.Cu mixed hide)
     (31 B.Cu mixed hide)
     (32 B.Adhes user hide)
     (33 F.Adhes user hide)
@@ -34,7 +34,7 @@
   )
 
   (setup
-    (last_trace_width 2.5)
+    (last_trace_width 0.25)
     (user_trace_width 0.4)
     (user_trace_width 0.6)
     (user_trace_width 2.5)
@@ -91,9 +91,9 @@
       (subtractmaskfromsilk false)
       (outputformat 1)
       (mirror false)
-      (drillshape 1)
+      (drillshape 0)
       (scaleselection 1)
-      (outputdirectory ""))
+      (outputdirectory "gerber/"))
   )
 
   (net 0 "")
@@ -1338,6 +1338,12 @@
       (solder_mask_margin 2) (clearance 3))
   )
 
+  (gr_text "Led panel \nver .9 alpha" (at 99.770001 88.975001) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
+  (gr_text JLCJLCJLCJLC (at 139.140001 78.815001) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
   (gr_text + (at 112.860001 48.405001) (layer F.SilkS) (tstamp 5F9C1EEB)
     (effects (font (size 0.8 0.8) (thickness 0.1)))
   )
@@ -1539,7 +1545,7 @@
   (segment (start 143.460001 119.805001) (end 146.410002 116.855) (width 2.5) (layer B.Cu) (net 33))
   (segment (start 115.860001 119.805001) (end 143.460001 119.805001) (width 2.5) (layer B.Cu) (net 33))
 
-  (zone (net 1) (net_name Earth) (layer B.Cu) (tstamp 0) (hatch edge 0.508)
+  (zone (net 1) (net_name Earth) (layer B.Cu) (tstamp 5F9ABAA0) (hatch edge 0.508)
     (connect_pads (clearance 0.5))
     (min_thickness 0.25)
     (fill yes (arc_segments 32) (thermal_gap 0.8) (thermal_bridge_width 2) (smoothing chamfer))
@@ -7571,7 +7577,7 @@
       (pts (xy 91.335002 103.631271) (xy 91.335002 117.893603))
     )
   )
-  (zone (net 2) (net_name +12V) (layer F.Cu) (tstamp 0) (hatch edge 0.508)
+  (zone (net 2) (net_name +12V) (layer F.Cu) (tstamp 5F9ABA9D) (hatch edge 0.508)
     (connect_pads (clearance 0.5))
     (min_thickness 0.6)
     (fill yes (arc_segments 16) (thermal_gap 0.2) (thermal_bridge_width 3) (smoothing chamfer))

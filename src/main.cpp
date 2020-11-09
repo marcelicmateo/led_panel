@@ -103,6 +103,9 @@ void setup()
   pinMode(BLUE_PIN, OUTPUT);
   pinMode(RED_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);
+  analogWrite(GREEN_PIN, 0);
+  analogWrite(RED_PIN, 1023);
+  analogWrite(BLUE_PIN, 0);
 }
 
 enum state_HSV
