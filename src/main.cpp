@@ -138,6 +138,13 @@ void loop()
 
 #define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
+/**
+ * Changes value of X based on rotation 
+ * 
+ * @param rotation Defines rotation of rotary swich
+ * @param X Value to change
+ * @param m mod value for circular implementation
+ */  
 void change_value(unsigned char rotation, unsigned short int *X, int m)
 {
   
@@ -152,9 +159,12 @@ void change_value(unsigned char rotation, unsigned short int *X, int m)
     }
   
 }
-
+/**
+ * Convert hue value sturatuon to rgb values
+ */
 void HSVtoRGB(HSV_values hsv, RGB_values *rgb)
 {
+
   double s = double(hsv.s) / 100;
   double v = double(hsv.v) / 100;
   double C = s * v;
@@ -187,9 +197,8 @@ void HSVtoRGB(HSV_values hsv, RGB_values *rgb)
     r = C, g = 0, b = X;
   }
 
+  // multiply by for for full range of 1024 PWM values
   rgb->red = (r + m) * 255 * 4;
   rgb->green = (g + m) * 255 * 4;
   rgb->blue = (b + m) * 255 * 4;
-
-
 }
