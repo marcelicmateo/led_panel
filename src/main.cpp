@@ -10,7 +10,7 @@
 // Initialize the OLED display using brzo_i2c
 // D2 -> SDA
 // D1 -> SCL
-SSD1306Brzo display(0x3C, D2, D1);
+SSD1306Brzo display(0x3C, D2, D1, GEOMETRY_128_64);
 
 //init rotary on PINS D4, D3
 Rotary rotary = Rotary(D3, D4);
@@ -93,11 +93,18 @@ void loop()
 {
   static unsigned short int state = Hue;
 
-  static String h_prefix = "H: ";
-  static String s_prefix = "S: ";
-  static String v_prefix = "B: ";
+  constexpr  char h_prefix[] = "H: ";
+  constexpr  char s_prefix[] = "S: ";
+  constexpr  char v_prefix[] = "B: ";
+  constexpr  char prefix[] = "> ";
+
+  constexpr unsigned short int x = 16;
+  constexpr unsigned short int y = 0;
+
+
 
   static unsigned char rot_direction;
+  
   rot_direction = rotary.process();
   button.update();
 
@@ -129,9 +136,10 @@ void loop()
     // Serial.printf("%d, %d, %d\n", R, G, B);
   }
   display.clear();
-  display.drawString(0, 0, h_prefix + String(hsv.h, DEC));
-  display.drawString(0, 16, s_prefix + String(hsv.s, DEC));
-  display.drawString(0, 32, v_prefix + String(hsv.v, DEC));
+  display.drawString(0, y + 16*state, prefix);
+  display.drawString(state == Hue ? x : 0, y+0, h_prefix + String(hsv.h, DEC));
+  display.drawString(state == Saturation ? x : 0, y+16, s_prefix + String(hsv.s, DEC));
+  display.drawString(state == Value ? x : 0, y+32, v_prefix + String(hsv.v, DEC));
   display.display();
 }
 
