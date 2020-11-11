@@ -9,32 +9,44 @@
 
 #define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
-void HSVtoRGB(short int *H, short int *S, short int *V, short unsigned int *R, short unsigned int *G, short unsigned int *B)
-{
+struct RGB_values {
+      char red = 0;
+      char green = 0;
+      char blue = 0;
+    } RGB;
+struct HSV_values{
+  unsigned short int h =0;
+  unsigned short int s =100;
+  unsigned short int v=100;
+} hsv;
 
-  double s = double(*S) / 100;
-  double v = double(*V) / 100;
+
+void HSVtoRGB(HSV_values hsv, RGB_values *rgb)
+{
+  double s = double(hsv.s) / 100;
+  double v = double(hsv.v) / 100;
   double C = s * v;
-  double X = C * (1 - fabs(fmod(double(*H) / 60.0, 2.0) - 1));
+  double X = C * (1 - fabs(fmod(double(hsv.h) / 60.0, 2.0) - 1));
   double m = v - C;
   double r, g, b;
-  if (*H >= 0 && *H < 60)
+
+  if (hsv.h >= 0 && hsv.h < 60)
   {
     r = C, g = X, b = 0;
   }
-  else if (*H >= 60 && *H < 120)
+  else if (hsv.h >= 60 && hsv.h < 120)
   {
     r = X, g = C, b = 0;
   }
-  else if (*H >= 120 && *H < 180)
+  else if (hsv.h >= 120 && hsv.h < 180)
   {
     r = 0, g = C, b = X;
   }
-  else if (*H >= 180 && *H < 240)
+  else if (hsv.h >= 180 && hsv.h < 240)
   {
     r = 0, g = X, b = C;
   }
-  else if (*H >= 240 && *H < 300)
+  else if (hsv.h >= 240 && hsv.h < 300)
   {
     r = X, g = 0, b = C;
   }
@@ -43,11 +55,14 @@ void HSVtoRGB(short int *H, short int *S, short int *V, short unsigned int *R, s
     r = C, g = 0, b = X;
   }
 
-  // multiply by 4for for 0 - 1024 range of pwm
-  *R = (r + m) * 255 * 4;
-  *G = (g + m) * 255 * 4;
-  *B = (b + m) * 255 * 4;
+  rgb->red = (r + m) * 255 * 4;
+  rgb->green = (g + m) * 255 * 4;
+  rgb->blue = (b + m) * 255 * 4;
+
+
 }
+
+
 
 // Initialize the OLED display using brzo_i2c
 // D2 -> SDA
@@ -55,11 +70,11 @@ void HSVtoRGB(short int *H, short int *S, short int *V, short unsigned int *R, s
 SSD1306Brzo display(0x3C, D2, D1);
 
 //init rotary on PINS D4, D3
-Rotary r = Rotary(D3, D4);
+Rotary rotary = Rotary(D3, D4);
 
 //init button on pin GPIO3
 #define BUTTON_PIN 3
-Button b = Button();
+Button button = Button();
 
 //pwm pins for driving leds
 #define RED_PIN D6
@@ -71,6 +86,7 @@ void setup()
   //display setup
   display.init();
   display.displayOn();
+  display.flipScreenVertically();
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.setFont(ArialMT_Plain_16);
   display.clear();
@@ -86,15 +102,15 @@ void setup()
   display.display();
 
   // buton setup
-  b.attach(BUTTON_PIN, INPUT);
-  b.interval(25);
-  b.setPressedState(HIGH);
+  button.attach(BUTTON_PIN, INPUT);
+  button.interval(25);
+  button.setPressedState(HIGH);
   display.clear();
   display.drawProgressBar(2, 30, 120, 4, 50);
   display.display();
 
   //rotary setup
-  r.begin(true);
+  rotary.begin(true);
   display.clear();
   display.drawProgressBar(2, 30, 120, 4, 75);
   display.display();
@@ -116,12 +132,11 @@ enum state_HSV
 };
 #define VALID_STATES 3
 
-void change_value(unsigned char result, short int *X, int m)
+void change_value(unsigned char rotation, unsigned short int *X, int m)
 {
-  if (result)
-  {
+  
     // Serial.println(result == DIR_CW ? "Right" : "Left");
-    if (result == DIR_CW)
+    if (rotation == DIR_CW)
     {
       *X = MOD((*X + 1), m);
     }
@@ -129,54 +144,51 @@ void change_value(unsigned char result, short int *X, int m)
     {
       *X = MOD((*X - 1), m);
     }
-  }
+  
 }
 
 void loop()
 {
-  static short int H = 0;
-  static short int S = 100;
-  static short int V = 100;
-  static unsigned short int R, G, B;
   static unsigned short int state = Hue;
 
   static String h_prefix = "H: ";
   static String s_prefix = "S: ";
   static String v_prefix = "B: ";
 
-  unsigned char result = r.process();
-  b.update();
+  static unsigned char rot_direction;
+  rot_direction = rotary.process();
+  button.update();
 
-  if (b.pressed())
+  if (button.pressed())
   {
     //Serial.println("pushed");
-    state = (state + 1) % 3;
+    state = (state + 1) % VALID_STATES;
   }
-  if (result)
+  if (rot_direction)
   {
     switch (state)
     {
     case Hue:
-      change_value(result, &H, 360);
+      change_value(rot_direction, &hsv.h, 360);
       break;
     case Saturation:
-      change_value(result, &S, 101);
+      change_value(rot_direction, &hsv.s, 101);
       break;
     case Value:
-      change_value(result, &V, 101);
+      change_value(rot_direction, &hsv.v, 101);
       break;
     default:
       break;
     }
-    HSVtoRGB(&H, &S, &V, &R, &G, &B);
-    analogWrite(GREEN_PIN, G);
-    analogWrite(RED_PIN, R);
-    analogWrite(BLUE_PIN, B);
+    HSVtoRGB(hsv, &RGB);
+    analogWrite(GREEN_PIN, RGB.green);
+    analogWrite(RED_PIN, RGB.red);
+    analogWrite(BLUE_PIN, RGB.blue);
     // Serial.printf("%d, %d, %d\n", R, G, B);
   }
   display.clear();
-  display.drawString(0, 0, h_prefix + String(H, DEC));
-  display.drawString(0, 16, s_prefix + String(S, DEC));
-  display.drawString(0, 32, v_prefix + String(V, DEC));
+  display.drawString(0, 0, h_prefix + String(hsv.h, DEC));
+  display.drawString(0, 16, s_prefix + String(hsv.s, DEC));
+  display.drawString(0, 32, v_prefix + String(hsv.v, DEC));
   display.display();
 }
