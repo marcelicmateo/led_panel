@@ -7,63 +7,6 @@
 #include <Bounce2.h>
 #include <math.h>
 
-#define MOD(a, b) ((((a) % (b)) + (b)) % (b))
-
-struct RGB_values {
-      char red = 0;
-      char green = 0;
-      char blue = 0;
-    } RGB;
-struct HSV_values{
-  unsigned short int h =0;
-  unsigned short int s =100;
-  unsigned short int v=100;
-} hsv;
-
-
-void HSVtoRGB(HSV_values hsv, RGB_values *rgb)
-{
-  double s = double(hsv.s) / 100;
-  double v = double(hsv.v) / 100;
-  double C = s * v;
-  double X = C * (1 - fabs(fmod(double(hsv.h) / 60.0, 2.0) - 1));
-  double m = v - C;
-  double r, g, b;
-
-  if (hsv.h >= 0 && hsv.h < 60)
-  {
-    r = C, g = X, b = 0;
-  }
-  else if (hsv.h >= 60 && hsv.h < 120)
-  {
-    r = X, g = C, b = 0;
-  }
-  else if (hsv.h >= 120 && hsv.h < 180)
-  {
-    r = 0, g = C, b = X;
-  }
-  else if (hsv.h >= 180 && hsv.h < 240)
-  {
-    r = 0, g = X, b = C;
-  }
-  else if (hsv.h >= 240 && hsv.h < 300)
-  {
-    r = X, g = 0, b = C;
-  }
-  else
-  {
-    r = C, g = 0, b = X;
-  }
-
-  rgb->red = (r + m) * 255 * 4;
-  rgb->green = (g + m) * 255 * 4;
-  rgb->blue = (b + m) * 255 * 4;
-
-
-}
-
-
-
 // Initialize the OLED display using brzo_i2c
 // D2 -> SDA
 // D1 -> SCL
@@ -124,6 +67,17 @@ void setup()
   analogWrite(BLUE_PIN, 0);
 }
 
+struct RGB_values {
+      char red = 0;
+      char green = 0;
+      char blue = 0;
+    } RGB;
+struct HSV_values{
+  unsigned short int h =0;
+  unsigned short int s =100;
+  unsigned short int v=100;
+} hsv;
+
 enum state_HSV
 {
   Hue,
@@ -132,20 +86,8 @@ enum state_HSV
 };
 #define VALID_STATES 3
 
-void change_value(unsigned char rotation, unsigned short int *X, int m)
-{
-  
-    // Serial.println(result == DIR_CW ? "Right" : "Left");
-    if (rotation == DIR_CW)
-    {
-      *X = MOD((*X + 1), m);
-    }
-    else
-    {
-      *X = MOD((*X - 1), m);
-    }
-  
-}
+void HSVtoRGB(HSV_values hsv, RGB_values *rgb);
+void change_value(unsigned char rotation, unsigned short int *X, int m);
 
 void loop()
 {
@@ -191,4 +133,63 @@ void loop()
   display.drawString(0, 16, s_prefix + String(hsv.s, DEC));
   display.drawString(0, 32, v_prefix + String(hsv.v, DEC));
   display.display();
+}
+
+
+#define MOD(a, b) ((((a) % (b)) + (b)) % (b))
+
+void change_value(unsigned char rotation, unsigned short int *X, int m)
+{
+  
+    // Serial.println(result == DIR_CW ? "Right" : "Left");
+    if (rotation == DIR_CW)
+    {
+      *X = MOD((*X + 1), m);
+    }
+    else
+    {
+      *X = MOD((*X - 1), m);
+    }
+  
+}
+
+void HSVtoRGB(HSV_values hsv, RGB_values *rgb)
+{
+  double s = double(hsv.s) / 100;
+  double v = double(hsv.v) / 100;
+  double C = s * v;
+  double X = C * (1 - fabs(fmod(double(hsv.h) / 60.0, 2.0) - 1));
+  double m = v - C;
+  double r, g, b;
+
+  if (hsv.h >= 0 && hsv.h < 60)
+  {
+    r = C, g = X, b = 0;
+  }
+  else if (hsv.h >= 60 && hsv.h < 120)
+  {
+    r = X, g = C, b = 0;
+  }
+  else if (hsv.h >= 120 && hsv.h < 180)
+  {
+    r = 0, g = C, b = X;
+  }
+  else if (hsv.h >= 180 && hsv.h < 240)
+  {
+    r = 0, g = X, b = C;
+  }
+  else if (hsv.h >= 240 && hsv.h < 300)
+  {
+    r = X, g = 0, b = C;
+  }
+  else
+  {
+    r = C, g = 0, b = X;
+  }
+
+  rgb->red = (r + m) * 255 * 4;
+  rgb->green = (g + m) * 255 * 4;
+  rgb->blue = (b + m) * 255 * 4;
+
+
 }
