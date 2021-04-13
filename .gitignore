@@ -5,21 +5,34 @@
 .vscode/ipch
 hardware/*/*bak
 .vscode/settings.json
-hardware/led_panel/_saved_led_panel.pro
-hardware/led_panel/led_panel-cache.lib
-hardware/led_panel/led_panel.net
-hardware/led_panel/oled.bck
-hardware/led_panel/oled.dcm
-hardware/led_panel/sym-lib-table
-hardware/led_panel/gerber/led_panel_.9.zip
-hardware/led_panel/gerber/led_panel-B.Cu.gbr
-hardware/led_panel/gerber/led_panel-B.Mask.gbr
-hardware/led_panel/gerber/led_panel-B.Paste.gbr
-hardware/led_panel/gerber/led_panel-B.SilkS.gbr
-hardware/led_panel/gerber/led_panel-Edge.Cuts.gbr
-hardware/led_panel/gerber/led_panel-F.Cu.gbr
-hardware/led_panel/gerber/led_panel-F.Mask.gbr
-hardware/led_panel/gerber/led_panel-F.Paste.gbr
-hardware/led_panel/gerber/led_panel-F.SilkS.gbr
-hardware/led_panel/gerber/led_panel-NPTH.drl
-hardware/led_panel/gerber/led_panel-PTH.drl
+
+
+
+# For PCBs designed using KiCad: http://www.kicad-pcb.org/
+# Format documentation: http://kicad-pcb.org/help/file-formats/
+
+# Temporary files
+*.000
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+*.sch-bak
+*~
+_autosave-*
+*.tmp
+*-save.pro
+*-save.kicad_pcb
+fp-info-cache
+
+# Netlist files (exported from Eeschema)
+*.net
+
+# Autorouter files (exported from Pcbnew)
+*.dsn
+*.ses
+
+# Exported BOM files
+*.xml
+*.csv

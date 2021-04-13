@@ -1,5 +1,5 @@
 EESchema Schematic File Version 4
-EELAYER 26 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -332,7 +332,7 @@ U 1 1 5F9958C6
 P 950 1200
 F 0 "J2" H 950 1000 50  0000 C CNN
 F 1 "Meanwell LPV-100-12" H 950 1350 50  0000 C CNN
-F 2 "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm" H 950 1200 50  0001 C CNN
+F 2 "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal" H 950 1200 50  0001 C CNN
 F 3 "~" H 950 1200 50  0001 C CNN
 	1    950  1200
 	-1   0    0    1   
@@ -446,45 +446,45 @@ $EndComp
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 5F9B86AA
-P 10250 900
-F 0 "H1" H 10350 946 50  0000 L CNN
-F 1 "MountingHole" H 10350 855 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10250 900 50  0001 C CNN
-F 3 "~" H 10250 900 50  0001 C CNN
-	1    10250 900 
+P 10150 750
+F 0 "H1" H 10250 796 50  0000 L CNN
+F 1 "MountingHole" H 10250 705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10150 750 50  0001 C CNN
+F 3 "~" H 10150 750 50  0001 C CNN
+	1    10150 750 
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 5F9B87AA
-P 10250 1100
-F 0 "H2" H 10350 1146 50  0000 L CNN
-F 1 "MountingHole" H 10350 1055 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10250 1100 50  0001 C CNN
-F 3 "~" H 10250 1100 50  0001 C CNN
-	1    10250 1100
+P 10150 950
+F 0 "H2" H 10250 996 50  0000 L CNN
+F 1 "MountingHole" H 10250 905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10150 950 50  0001 C CNN
+F 3 "~" H 10150 950 50  0001 C CNN
+	1    10150 950 
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 5F9B87EC
-P 10250 1300
-F 0 "H3" H 10350 1346 50  0000 L CNN
-F 1 "MountingHole" H 10350 1255 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10250 1300 50  0001 C CNN
-F 3 "~" H 10250 1300 50  0001 C CNN
-	1    10250 1300
+P 10150 1150
+F 0 "H3" H 10250 1196 50  0000 L CNN
+F 1 "MountingHole" H 10250 1105 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10150 1150 50  0001 C CNN
+F 3 "~" H 10150 1150 50  0001 C CNN
+	1    10150 1150
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 5F9B8838
-P 10250 1500
-F 0 "H4" H 10350 1546 50  0000 L CNN
-F 1 "MountingHole" H 10350 1455 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10250 1500 50  0001 C CNN
-F 3 "~" H 10250 1500 50  0001 C CNN
-	1    10250 1500
+P 10150 1350
+F 0 "H4" H 10250 1396 50  0000 L CNN
+F 1 "MountingHole" H 10250 1305 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_DIN965" H 10150 1350 50  0001 C CNN
+F 3 "~" H 10150 1350 50  0001 C CNN
+	1    10150 1350
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -493,7 +493,7 @@ U 1 1 5F9BBA06
 P 2300 2450
 F 0 "J1" V 2266 2162 50  0000 R CNN
 F 1 "Screw_Terminal_01x04" V 2175 2162 50  0000 R CNN
-F 2 "TerminalBlock_Dinkle:TerminalBlock_Dinkle_DT-55-B01X-04_P10.00mm" H 2300 2450 50  0001 C CNN
+F 2 "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal" H 2300 2450 50  0001 C CNN
 F 3 "~" H 2300 2450 50  0001 C CNN
 	1    2300 2450
 	0    -1   -1   0   
@@ -504,7 +504,7 @@ U 1 1 5F9BBB2D
 P 5950 2500
 F 0 "J3" V 5916 2212 50  0000 R CNN
 F 1 "Screw_Terminal_01x04" V 5825 2212 50  0000 R CNN
-F 2 "TerminalBlock_Dinkle:TerminalBlock_Dinkle_DT-55-B01X-04_P10.00mm" H 5950 2500 50  0001 C CNN
+F 2 "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal" H 5950 2500 50  0001 C CNN
 F 3 "~" H 5950 2500 50  0001 C CNN
 	1    5950 2500
 	0    -1   -1   0   
