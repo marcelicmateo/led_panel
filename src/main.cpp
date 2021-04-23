@@ -59,6 +59,7 @@ void setup() {
   button.attach(BUTTON_PIN, INPUT);
   button.interval(25);
   button.setPressedState(HIGH);
+
   display.clear();
   display.drawProgressBar(2, 30, 120, 4, 50);
   display.display();
